@@ -6,8 +6,10 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from oauth2_provider import urls as oauth2_urls
+from vlum.views import api_root
 
 urlpatterns = [
+    path('', api_root, name='api-root'),
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
