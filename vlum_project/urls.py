@@ -8,6 +8,8 @@ from django.conf.urls.static import static
 from oauth2_provider import urls as oauth2_urls
 from vlum.views import api_root
 
+handler404 = 'vlum.views.custom_404'
+
 urlpatterns = [
     path('', api_root, name='api-root'),
     path('admin/', admin.site.urls),
