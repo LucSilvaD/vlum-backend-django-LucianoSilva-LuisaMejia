@@ -5,11 +5,18 @@ from oauth2_provider.contrib.rest_framework import TokenHasScope, OAuth2Authenti
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
 class MovieViewSet(viewsets.ModelViewSet):
+
     queryset = Movie.objects.all()
     serializer_class = MovieSerializer
-
     authentication_classes = [OAuth2Authentication]
     required_scopes = ['write']
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        director_id = self.request.query_params.get('director')
+        if director_id is not None:
+            queryset = queryset.filter(director_id=director_id)
+        return queryset
 
     def get_permissions(self):
         if self.request.method in ['POST', 'PUT', 'PATCH', 'DELETE']:
